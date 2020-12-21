@@ -1,0 +1,337 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww13360\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 //Arturo Chaidez\'92s JokeLog.txt\
+//Will be copying and pasting output from console, showing CheckList points to show Server works as required\
+\
+// Test 1 - Connecting to one Client, showing all jokes and it randomizing (mostly)\
+//Does not seem to want to randomize JD or PD at times (last joke and proverb)\
+\
+//JokeServer startup\
+> javac JokeServer.java\
+> java JokeServer\
+In the admin looper thread.\
+Arturo Chaidez's Joke Server 1.0 , using port 4545\
+\
+//JokeClient startup and name given\
+> javac JokeClient.java\
+> java JokeClient\
+Welcome to Arturo Chaidez's Joke server, port 4545.\
+ClientAdmin port 5050\
+You must be pretty bored to connect here..give me your name...\
+Art\
+Click enter for a joke. Once you realize this place isn't very funny, (quit) to get out.\
+\
+//Jokes given back, 3 times for every joke\
+JA Art- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JC Art- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+JB Art- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JA Art- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+JC Art- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JA Art- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JD Art- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+//Output coming from JavaServer\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all jokes, new random order.\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all jokes, new random order.\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+\
+//Test 2- Starting up JokeClientAdmin. Switching to Proverbs and 3 sets of jokes again\
+> javac JokeClientAdmin.java\
+> java JokeClientAdmin\
+Arturo Chaidez's JokeClientAdmin\
+Click enter to switch settings, or type (quit) to end program.\
+Changed setting\
+\
+//Proverbs in JokeClient\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+PB Art- They don't think it be like it is, but it do.\
+PC Art- Float like a butterfly and sting like a bee.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+\
+PB Art- They don't think it be like it is, but it do.\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+PC Art- Float like a butterfly and sting like a bee.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+\
+PC Art- Float like a butterfly and sting like a bee.\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+PB Art- They don't think it be like it is, but it do.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+\
+//Output from JokeServer\
+Changing to Proverb setting.\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all proverbs, new random order\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all proverbs, new random order\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+\
+//Test 3a- Opening up a second client, will run proverbs twice \
+\
+Welcome to Arturo Chaidez's Joke server, port 4545.\
+ClientAdmin port 5050\
+You must be pretty bored to connect here..give me your name...\
+Art2\
+Click enter for a joke. Once you realize this place isn't very funny, (quit) to get out.\
+\
+PA Art2- Sometimes we need to push a marble across the floor with our noses.\
+PB Art2- They don't think it be like it is, but it do.\
+PC Art2- Float like a butterfly and sting like a bee.\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+\
+PC Art2- Float like a butterfly and sting like a bee.\
+PA Art2- Sometimes we need to push a marble across the floor with our noses.\
+PB Art2- They don't think it be like it is, but it do.\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+\
+//JokeServer output\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all proverbs, new random order\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 //Part 3b- Second Client running jokes twice\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 //JokeClientAdmin Output\
+\
+Changed setting\
+\
+//JokeClient Output\
+JC Art2- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JA Art2- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art2- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JD Art2- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+JB Art2- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JA Art2- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art2- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art2- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+//JokeServer output\
+Changing to Joke setting.\
+Getting Client info\
+Seen all jokes, new random order.\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+Seen all jokes, new random order.\
+Getting Client info\
+Getting Client info\
+Getting Client info\
+\
+//Part 4- Will alternate 2 lines in Client1 (Art1) and 2 in Client2(Art2). Only showing Client output\
+//Client1\
+JB Art- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JA Art- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+\
+//Client2\
+JA Art2- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art2- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+//Client1\
+JC Art- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+//Client2\
+JC Art2- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art2- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+//Client1\
+JA Art- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+//Client2\
+JA Art2- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art2- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+//Client1\
+JC Art- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+//Client2- ***JD no longer last?\
+JB Art2- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JC Art2- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+\
+//Test 5- 4 lines for each client. Switching to proverb\
+// *** Suddenly JD is random?\
+//Client1\
+PC Art- Float like a butterfly and sting like a bee.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+PB Art- They don't think it be like it is, but it do.\
+\
+//Client2\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+PA Art2- Sometimes we need to push a marble across the floor with our noses.\
+PB Art2- They don't think it be like it is, but it do.\
+PC Art2- Float like a butterfly and sting like a bee.\
+\
+//Client1 *** two PD? Uh oh\'85\
+PC Art- Float like a butterfly and sting like a bee.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+\
+//Client2- JD twice in a roll\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+PA Art2- Sometimes we need to push a marble across the floor with our noses.\
+PB Art2- They don't think it be like it is, but it do.\
+\
+//Client1\
+PB Art- They don't think it be like it is, but it do.\
+PC Art- Float like a butterfly and sting like a bee.\
+PD Art- Baseball is ninety percent mental. The other half is physical.\
+PA Art- Sometimes we need to push a marble across the floor with our noses.\
+\
+//Client2\
+PC Art2- Float like a butterfly and sting like a bee.\
+PD Art2- Baseball is ninety percent mental. The other half is physical.\
+PA Art2- Sometimes we need to push a marble across the floor with our noses.\
+PB Art2- They don't think it be like it is, but it do.\
+\
+//Will now close both Clients, open a new one. Switch to proverb right away\
+//Client1\
+quit\
+I see you got bored. Program ended\
+\
+//Client2\
+quit\
+I see you got bored. Program ended\
+\
+//Client3\
+java JokeClient\
+Welcome to Arturo Chaidez's Joke server, port 4545.\
+ClientAdmin port 5050\
+You must be pretty bored to connect here..give me your name...\
+Art3\
+Click enter for a joke. Once you realize this place isn't very funny, (quit) to get out.\
+\
+PA Art3- Sometimes we need to push a marble across the floor with our noses.\
+PB Art3- They don't think it be like it is, but it do.\
+PC Art3- Float like a butterfly and sting like a bee.\
+PD Art3- Baseball is ninety percent mental. The other half is physical.\
+\
+PC Art3- Float like a butterfly and sting like a bee.\
+PA Art3- Sometimes we need to push a marble across the floor with our noses.\
+PB Art3- They don't think it be like it is, but it do.\
+PD Art3- Baseball is ninety percent mental. The other half is physical.\
+\
+PC Art3- Float like a butterfly and sting like a bee.\
+PA Art3- Sometimes we need to push a marble across the floor with our noses.\
+PB Art3- They don't think it be like it is, but it do.\
+PD Art3- Baseball is ninety percent mental. The other half is physical.\
+\
+//Same issue with PD always being last. Switch to jokes and began clicking enter a lot\
+\
+JA Art3- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art3- I googled your symptoms and it says here you could  have network connectivity problems.\
+JB Art3- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+JA Art3- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art3- I googled your symptoms and it says here you could  have network connectivity problems.\
+JB Art3- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+//two JD again\
+JA Art3- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art3- I googled your symptoms and it says here you could  have network connectivity problems.\
+JD Art3- I googled your symptoms and it says here you could  have network connectivity problems.\
+\
+JA Art3- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JB Art3- Did you know that the original title for War and Peace was War, What Is It Good For?\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JB Art3- Did you know that the original title for War and Peace was War, What Is It Good For?\
+\
+//now two JC! \
+JA Art3- You got to believe in yourself. I believe I'm the best-looking guy in the world and I might be right.\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+JD Art3- I googled your symptoms and it says here you could  have network connectivity problems.\
+JC Art3- Jogging is the worst. I know it keeps you healthy, but God, at what cost?\
+\
+//Closing down everything, take a break, and come up with the experiments.\
+//JokeClientAdmin\
+quit\
+Client has ended program.\
+//Client3\
+quit\
+I see you got bored. Program ended\
+//JokeServer- realized I do not know how to shutdown JokeServer\
+^X^C\
+\
+//Changed some code, added required println for JokeClient and JokeClientAdmin\
+\
+//Test this Checklist point? Keep it at No for now\
+//\cf2 \expnd0\expndtw0\kerning0
+Maintains client conversations without interference from other clients\
+\pard\pardeftab720\sl280\partightenfactor0
+\cf2 //Correctly maintains converstations with interleaved Joke/Proverb modes\
+//Can start JokeServer[s], JokeClient, and JokeClientAdmin in any order \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+\
+}
