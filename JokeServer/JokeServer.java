@@ -274,31 +274,27 @@ class JokeWorker extends Thread {
     Line savedLine = new Line();
     Random randomNumber = new Random();
     //was doing .nextInt(4) but was not randomizing correctly, trying 5
-    //5 gives me an error. Try ((3-0) +1 )
+    //5 returns error. Try ((3-0) +1 )
     //that did not work. just stick to 4
     int pickRandom= randomNumber.nextInt(4);
 
     /* if/else statement. If server is in joke setting, get next joke, make sure we
      * dont need to randomize again, reset jokes. Else, do the same for proverb*/
     if (JokeServer.setting.equals("Joke")) {
-      //set bool to true. Can loop to find if all jokes have been used.
       boolean allJokesUsed = true;
       int[] toldJokes = client.getToldJokes();
 
-      //loop if all Jokes have been used. If one has not been used, set it to false
       for (int x = 0; x < toldJokes.length; x++) {
         if (toldJokes[x] != 1) {
           allJokesUsed = false;
           break;
         }
       }
-      //if all jokes have been seen, reset array to 0
       if (allJokesUsed) {
         Arrays.fill(toldJokes, 0);
         System.out.println("Seen all jokes, new random order.");
       }
 
-      //pick a random joke if they have not been used. Use it as nextLine
       if (toldJokes[pickRandom] == 0 && allJokesUsed) {
         toldJokes[pickRandom] = 1;
         client.setToldJokes(toldJokes);
