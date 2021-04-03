@@ -43,21 +43,14 @@ I have also seen two of the same in one list before randomizing
 import java.io.*; //used to retrieve the I/O libraries
 import java.net.*; //used to retrieve the Java networking libraries
 
-//THIS is where we change between server
-/*I was trying to do it all on Client, misread instructions. I thought this
-* had to do with primary/secondary servers. */
 public class JokeClientAdmin {
 
-  //switch between jokes and proverbs
   private static String setting ;
   static boolean changeSetting = false;
 
-  // This is the main method.
   public static void main(String[] args) {
 
-    //this is the same as Inet
     String serverName;
-    //Same as InetClient
     if (args.length < 1) {
       serverName = "localhost";
       System.out.println("Now connected server to one, port: 5050");
@@ -69,16 +62,13 @@ public class JokeClientAdmin {
     System.out.println(("Arturo Chaidez's JokeClientAdmin"));
     BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     try {
-      //get input
       String adminInput = "";
       System.out.println(
           "Click enter to switch settings, or type (quit) to end program.");
       do {
-        //check input from client
         adminInput = in.readLine();
 
-        //if they do not quit and clicked enter, toggle to other setting
-        //when I use equal(), it quits after one click. not sure why
+        //when using equal(), it quits after one click.
         if (adminInput.indexOf("quit") < 0) {
           talkToServer(adminInput, serverName);
           System.out.println("Changed setting");
@@ -92,7 +82,6 @@ public class JokeClientAdmin {
 
 
   static void talkToServer(String name, String serverName) {
-    //same as usual
     Socket sock;
     BufferedReader fromServer;
     PrintStream toServer;
@@ -100,20 +89,13 @@ public class JokeClientAdmin {
 
     try {
 
-      //make socket
       sock = new Socket(serverName, 5050);
       fromServer = new BufferedReader((new InputStreamReader(sock.getInputStream())));
       toServer = new PrintStream(sock.getOutputStream());
 
-      //double check what this does?
-      //doesn't seen to do anything. It should only be "" anyway
-      /*Classmates had it print something on JokeServer, will try to figure it out later */
       toServer.println(name);
-      //switch to other setting
       if (changeSetting) {
-        //writing name
         toServer.println(setting);
-        // Read 3 lines, probably too many
         for(int i = 1; i <= 3; i++) {
           textFromServer = fromServer.readLine();
           if (textFromServer != null) {
@@ -123,9 +105,8 @@ public class JokeClientAdmin {
 
         changeSetting = false;
       }
-      //complete
       sock.close();
-    } catch (IOException x) { //same error check
+    } catch (IOException x) {
       System.out.println("Error: Socket error.");
       x.printStackTrace();
     }

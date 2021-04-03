@@ -46,30 +46,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
-//format goes: JokeServer, ClientData, AdminLooper, AdminWorker, JokeWorker
-//From lectures, using HashMaps to store jokes and proverbs
 /*Suggestions from classmates on D2L, Store on a HashMap. */
-
-//store jokes/proverbs on Server. Maybe it can be done in ServerThread?
 public class JokeServer {
 
-  /* Setting- allows admin to switch between jokes and proverbs
-   * Name, id- store client info on HashMap. Use large random number */
   static String setting = "Joke";
   static String name;
   static String id = "";
-  //need arrays to store told jokes/proverbs
   static int[] toldJokes;
   static int[] toldProverbs;
-  //create a class to store client data
   static ClientData client;
 
-  //HashMaps to store info from client. Classmate on D2L suggested HashMaps
   static HashMap<String, String> jokes = new HashMap<>();
   static HashMap<String, String> proverbs = new HashMap<>();
   static HashMap<String, ClientData> clientFiles = new HashMap<>();
 
-  //get jokes
   public static String getJoke(String key) {
     //NBA Hall of Famer Charles Barkley
     jokes.put("JA", "You got to believe in yourself. I believe" +
@@ -82,12 +72,9 @@ public class JokeServer {
     jokes.put("JD", "I googled your symptoms and it says here you could  " +
             "have network connectivity problems.");
 
-    /*key should be JA, JB, etc. + Client name +  joke */
-    //CheckList point requires us to return it in this format
     return key + " " + name + ": " + jokes.get(key);
   }
 
-  //get proverbs
   public static String getProverb(String key) {
     /*From a classmate from CSC447. He was explaining
      * prof wants us to complete this method without builtin functions*/
@@ -102,27 +89,22 @@ public class JokeServer {
     //Baseball HOF Yogi Berra
     proverbs.put("PD", "Baseball is ninety percent mental. The other half is physical.");
 
-    /*key should be PA, PB, etc. + Client name +  proverb */
-    //CheckList point requires us to return it in this format
     return key + " " + name + ": " + proverbs.get(key);
   }
 
   public static void main(String[] args) throws IOException {
 
     Socket sock;
-    int queueLen = 6; //how many requests our server can handle at a time
+    int queueLen = 6;
     //ports normally in 45750-55000 range, never below 1025
-    int port = 4545; //prof wants 4545 port
+    int port = 4545;
 
-    //from Prof
-    AdminLooper ad = new AdminLooper(); // create a thread
+    AdminLooper ad = new AdminLooper();
     Thread t = new Thread(ad);
-    t.start();  // start it, waits for input from administration
+    t.start();
 
-    //create server socket using ints above
     ServerSocket servSock = new ServerSocket(port, queueLen);
 
-    // print out correct port number
     System.out.println("Arturo Chaidez's Joke Server 1.0, using port " + port);
     while (true) {
       sock = servSock.accept();
@@ -131,20 +113,13 @@ public class JokeServer {
   }
 }
 
-//IntelliJ not recognizing I made this class?
-//It is allowing me to use JavaServer.ClientData,however...
-/*Figured out why!!! I had my { } all wrong and ClientData was not its own
- * class....*/
 class ClientData {
 
-  //basic info
   String name;
   String id;
   int[] toldJokes = {0, 0, 0, 0};
   int[] toldProverbs = {0, 0, 0, 0};
 
-  //Store info as objects/arrays
-  //allows server to keep track what jokes have been said and avoid reusing
   public void setToldJokes(int[] toldJokes) {
     this.toldJokes = toldJokes;
   }
@@ -170,23 +145,20 @@ class ClientData {
   }
 }
 
-//to toggle between joke/proverb
 class AdminLooper implements Runnable {
 
-  //All of this straight from prof example. Similar to what we have in main
   public static boolean adminSwitch = true;
 
   public void run() {
     System.out.println("In the admin looper thread.");
 
     int queueLen = 6;
-    int port = 5050;  // Prof wants 5050 for admin client
+    int port = 5050;
     Socket sock;
 
     try {
       ServerSocket servsock = new ServerSocket(port, queueLen);
       while (adminSwitch) {
-        // admin connection
         sock = servsock.accept();
         new AdminWorker(sock).start();
       }
@@ -197,14 +169,12 @@ class AdminLooper implements Runnable {
   }
 }
 
-//thread for Admin worker. Nearly the same as Worker thread in InetServer
 class AdminWorker extends Thread {
 
   Socket adminSock;
   AdminWorker (Socket s) {adminSock = s;}
 
   public void run() {
-    //same in/out as before
     PrintStream adminOut = null;
     BufferedReader adminIn = null;
 
@@ -215,7 +185,6 @@ class AdminWorker extends Thread {
 
         JokeServer.name = adminIn.readLine();
 
-        //check if clientAdmin wants to switch between settings.
         if (JokeServer.setting.equals("Joke")) {
           JokeServer.setting = "Proverb";
           //System.out.println(JokeServer.name);
@@ -227,31 +196,26 @@ class AdminWorker extends Thread {
 
         String settingChanged = "Changing to " + JokeServer.setting + " setting.";
 
-        //print it out on screens
         System.out.println(settingChanged);
         adminOut.println(settingChanged);
 
       } catch (IOException x) {
         System.out.println("Sever Error!");
-        x.printStackTrace(); //tells us where error happened
+        x.printStackTrace();
       }
-      adminSock.close(); //close it down, boys.
+      adminSock.close();
     } catch (IOException e) {
-      System.out.println(e); //for errors about input and output stream
+      System.out.println(e);
     }
   }
 }
 
-//again, JokeWorker nearly the same as InetWorker thread
-// Lots of code, controls randomizing joke/proverbs and keeping track of it
 class JokeWorker extends Thread {
-  //set up socket and constructor
   Socket jokeSock;
   JokeWorker(Socket s) { jokeSock = s; }
 
   public void run() {
-    /*decided not to call this clientIn and clientOut. Hard to keep track what "client"
-    * I am using, too many things named client. Maybe try to rename some stuff?*/
+
     PrintStream out = null;
     BufferedReader in = null;
 
@@ -259,14 +223,11 @@ class JokeWorker extends Thread {
       in = new BufferedReader(new InputStreamReader(jokeSock.getInputStream()));
       out = new PrintStream((jokeSock.getOutputStream()));
       try {
-        //read line client gave.
         JokeServer.name = in.readLine();
         System.out.println("Getting Client info");
 
-        //Reads in ID from Client
         JokeServer.id = in.readLine();
 
-        //if client has been here, get their info!
         if (JokeServer.clientFiles.containsKey(JokeServer.id)) {
           JokeServer.client = JokeServer.clientFiles.get(JokeServer.id);
           JokeServer.id = JokeServer.clientFiles.get(JokeServer.id).id;
@@ -274,10 +235,6 @@ class JokeWorker extends Thread {
           JokeServer.toldJokes = JokeServer.clientFiles.get(JokeServer.id).toldJokes;
           JokeServer.toldProverbs = JokeServer.clientFiles.get(JokeServer.id).toldProverbs;
         } else {
-          //No idea why it will not accept ClientData without JokeServer (JokeServer.ClientData)
-          //made a ClientData class, says it does not exist?
-          /*Figured out why!!! I had my { } all wrong and ClientData was not its own
-          * class....*/
           ClientData newClient = new ClientData();
           newClient.newName(JokeServer.name);
           newClient.newId(JokeServer.id);
@@ -285,14 +242,13 @@ class JokeWorker extends Thread {
           JokeServer.client = JokeServer.clientFiles.get(JokeServer.id);
         }
 
-        //send name to client
-        sendToClient(JokeServer.name, out);
+        sendToClient(out);
 
       } catch (IOException x) {
         System.out.println("Server read error");
         x.printStackTrace();
       }
-      jokeSock.close(); //close socket
+      jokeSock.close();
     } catch (
         IOException ioe) {
       System.out.println(ioe);
@@ -300,15 +256,8 @@ class JokeWorker extends Thread {
 
   }
 
-  //method to determine next joke/proverb
-  //used in senToClient
-  //Will not accept ClientData...
-  /*Figured out why!!! I had my { } all wrong and ClientData was not its own
-   * class....*/
   public Line newLine(ClientData client) {
 
-    /*only need to use one variable to store joke/proverb, since
-     * setting is only set to one at a time */
     String nextLine = "";
     HashMap<String, String> jokeMap = new HashMap<>();
     HashMap<String, String> proverbMap = new HashMap<>();
@@ -324,7 +273,6 @@ class JokeWorker extends Thread {
 
     Line savedLine = new Line();
     Random randomNumber = new Random();
-    //use a random generator to pick a random joke/proverb
     //was doing .nextInt(4) but was not randomizing correctly, trying 5
     //5 gives me an error. Try ((3-0) +1 )
     //that did not work. just stick to 4
@@ -358,8 +306,7 @@ class JokeWorker extends Thread {
         savedLine.nextJoke = nextLine;
         return savedLine;
       }
-      /*if randomly picked joke already used, loop through to find an unused
-       * joke. Can't do loop first because then it would not be random*/
+
       else {
         for (int x = 0; x < toldJokes.length; x++) {
           if (toldJokes[x] == 0) {
@@ -385,7 +332,6 @@ class JokeWorker extends Thread {
           break;
         }
       }
-      //reset proverbs
       if (allProverbsUsed) {
         Arrays.fill(toldProverbs, 0);
         System.out.println("Seen all proverbs, new random order");
@@ -399,8 +345,6 @@ class JokeWorker extends Thread {
         savedLine.nextJoke = nextLine;
         return savedLine;
       }
-      /*if randomly picked proverb already used, loop through to find an unused
-       * proverb. Can't do loop first because then it would not be random*/
       else {
         for (int x = 0; x < toldProverbs.length; x++) {
           if (toldProverbs[x] == 0) {
@@ -422,7 +366,6 @@ class JokeWorker extends Thread {
     String proverbList;
     String nextJoke;
 
-    //lists for jokes and proverbs
     public String getJokeList() {
       return jokeList;
     }
@@ -433,19 +376,15 @@ class JokeWorker extends Thread {
 
   }
 
-  //Method Sends jokes to client
-  //I never use String name. Just keep for now
-  public void sendToClient(String name, PrintStream out) {
+  public void sendToClient(PrintStream out) {
     Line savedLine = newLine(JokeServer.client);
 
-    //if the setting is in Joke Mode, get joke list and send unused joke
     if (JokeServer.setting.equals("Joke")) {
       if (savedLine.getJokeList() != null) {
         out.println(savedLine.getJokeList());
       }
       out.println(JokeServer.getJoke(savedLine.nextJoke));
     }
-    //do the same but for proverbs
     else {
       if (savedLine.getProverbList() != null) {
         out.println(savedLine.getProverbList());
